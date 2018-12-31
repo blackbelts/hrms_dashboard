@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+  <xpath expr="." position="inside">
+    <script src="/hrms_dashboard/static/src/js/Chart.min.js" type="text/javascript"/>
+  </xpath>
+  <t t-name="HrDashboardMain">
+    <xpath expr="." position="inside">
+      <script src="/hrms_dashboard/static/src/js/Chart.min.js" type="text/javascript"/>
+    </xpath>
+    <div class="o_dashboards">
+      <div class="container-fluid o_hr_dashboard">
+      </div>
+    </div>
+  </t>
+  <t t-name="dashInfo">
+    <xpath expr="." position="inside">
+      <script src="/hrms_dashboard/static/src/js/Chart.min.js" type="text/javascript"/>
+      <script src="/hrms_dashboard/static/src/js/custom.min.js" type="text/javascript" />
+      <script type="text/javascript" src="/hrms_dashboard/static/src/js/custome_js.js"/>
+      <!-- bootstrap-progressbar -->
+      <!--<script src="/hrms_dashboard/static/src/js/generalData.js" type="text/javascript"/>-->
+      <link href="/hrms_dashboard/static/src/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" type="text/css"/>
+      <!-- JQVMap -->
+      <link href="/hrms_dashboard/static/src/css/jqvmap.min.css" rel="stylesheet" type="text/css"/>
+      <!-- bootstrap-daterangepicker -->
+      <link href="/hrms_dashboard/static/src/css/daterangepicker.css" rel="stylesheet" type="text/css"/>
+      <!-- Custom Theme Style -->
+      <link href="/hrms_dashboard/static/src/css/custom.min.css" rel="stylesheet" type="text/css"/>
+      <link href="/hrms_dashboard/static/src/css/custom_style.css" rel="stylesheet" type="text/css"/>
+      <!--  <link rel="stylesheet" href="/hrms_dashboard/static/src/css/hrms_dashboard.css"/> -->
+    </xpath>
+    <div class="nav-sm">
+      <div class="container body">
+        <div class="main_container">
+          <!-- <div class="col-md-3 left_col menu_fixed">
+         <div class="left_col scroll-view">
+
+          <div class="clearfix"></div>
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a href="index.html"><i class="fa fa-home"></i> Production</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+        </div>
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+          <!-- start first row -->
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- top tiles -->
+              <div class="row tile_count">
+                <div class="col-sm-2  col-xs-6 tile_stats_count" id="expected-prem">
+                  <span class="count_top">
+                    <i class="fa fa-user"/>
+                    Expected Premium
+                  </span>
+                  <div class="count" id="expected-prem-num">
+                    <t t-esc="widget.makeNumber(widget.info['ExpectedPrem'][0])"/>
+                    $
+                  </div>
+                  <span class="count_bottom">
+                    <i class="green" id="expected-prem-prob">
+                      <t t-esc="widget.makeNumber(widget.info['ExpectedPrem'][1])"/>
+                      %
+                    </i>
+                    Average probability
+                  </span>
+                </div>
+                <div class="col-sm-2 col-xs-6 tile_stats_count" id="premium-written">
+                  <span class="count_top">
+                    <i class="fa fa-clock-o"/>
+                    Gross Premium Written
+                  </span>
+                  <div class="count" id="premium-written-gross">
+                    <t t-esc="widget.makeNumber(widget.info['Gross/Net'][1])"/>
+                    $
+                  </div>
+                  <span class="count_bottom">
+                    <i class="green" id="premium-written-net">
+                      <t t-esc="widget.makeNumber(widget.info['Gross/Net'][0])"/>
+                      $
+                    </i>
+                    Net Premium
+                  </span>
+                </div>
+                <div class="col-sm-2  col-xs-6 tile_stats_count">
+                  <span class="count_top">
+                    <i class="fa fa-user"/>
+                    Claims
+                  </span>
+                  <div class="count" id="claim-settled">
+                    <t t-esc="widget.makeNumber(widget.info['claim'][0])"/>
+                    $
+                  </div>
+                  <span class="count_bottom">
+                    <i class="green" id="claim-paid">
+                      <t t-esc="widget.makeNumber(widget.info['claim'][1])"/>
+                      $
+                    </i>
+                    Paid
+                  </span>
+                </div>
+                <div class="col-sm-2  col-xs-6 tile_stats_count">
+                  <span class="count_top">
+                    <i class="fa fa-user"/>
+                    Brokerage
+                  </span>
+                  <div class="count" id="brokerage-b"/>
+                  <span class="count_bottom">
+                    <i class="green" id="brokerage-percom"/>
+                    person Commision
+                  </span>
+                </div>
+                <div class="col-sm-2  col-xs-6 tile_stats_count">
+                  <span class="count_top">
+                    <i class="fa fa-user"/>
+                    O/S Premium
+                  </span>
+                  <div class="count" id="ostax">
+                    <t t-esc="widget.makeNumber(widget.info['TotalSigned'][0])"/>
+                    $
+                  </div>
+                  <span class="count_bottom">
+                    <i class="green" id="osuntax">
+                      <t t-esc="widget.makeNumber(widget.info['TotalSigned'][1])"/>
+                      $
+                    </i>
+                    Paid
+                  </span>
+                </div>
+                <div class="col-sm-2  col-xs-6 tile_stats_count" id="agents">
+                  <span class="count_top">
+                    <i class="fa fa-user"/>
+                    Agents
+                  </span>
+                  <div class="count" id="agents-number">
+                    <t t-esc="widget.makeNumber(widget.info['Agent'])"/>
+                  </div>
+                  <!-- <span class="count_bottom ratio"><i class=""><i class="fa fa-sort-asc"></i></i> From last month</span> -->
+                </div>
+              </div>
+            </div>
+            <!-- /top tiles -->
+            <div class="col-md-10 col-sm-12 col-xs-12">
+              <div class="clearfix"/>
+              <div class="row ">
+                <div class="col-sm-4 col-xs-12 fixedHeight">
+                  <div class="x_panel fixedHeight">
+                    <div class="x_title">
+                      <h2 class="custome-h2">
+                        Target Graph
+                        <small/>
+                      </h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-up"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"/>
+                    </div>
+                    <div class="x_content" id='target'>
+                      <canvas id="policylineChart" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4  col-xs-12 fixedHeight">
+                  <div class="x_panel fixedHeight">
+                    <div class="x_title">
+                      <h2 class="custome-h2">
+                        Net Premium vs Insurer
+                        <small/>
+                      </h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-up"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"/>
+                    </div>
+                    <div class="x_content">
+                      <table class="" style="width:100%">
+                        <!-- <tr>
+                        <th style="width:37%;">
+                          <p>Top 5</p>
+                        </th>
+                        <th>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <p class="">Device</p>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <p class="">Progress</p>
+                          </div>
+                        </th>
+                      </tr> -->
+                        <tr>
+                          <td>
+                            <canvas class="policypieChart" height="190px" width="110px" style="margin-right: 10px"/>
+                          </td>
+                          <td>
+                            <table class="tile_info">
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      <!--<canvas id="policypieChart" height="250"></canvas>-->
+                      <!-- <div id="policypieChart" style="min-width: 250px; height: 230px; margin: 0 auto"></div> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4  col-xs-12">
+                  <div class="x_panel fixedHeight">
+                    <div class="x_title">
+                      <h2 class="custome-h2">
+                        Net Premium vs LOB
+                        <small/>
+                      </h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-up"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"/>
+                    </div>
+                    <div class="x_content" id='bars'>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_title">
+                      <h2>Top 5 Meetings</h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-up"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"/>
+                    </div>
+                    <div class="x_content">
+                      <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                          <thead>
+                            <tr class="headings">
+                              <th class="column-title">Subject</th>
+                              <th class="column-title">Start Date</th>
+                            </tr>
+                          </thead>
+                          <tbody id="meetings">
+                            <t t-foreach="widget.info['Meeting']" t-as="item">
+                              <tr t-attf-class="{{item_parity}} pointer">
+                                <td>
+                                  <t t-esc="item['name']"/>
+                                </td>
+                                <td>
+                                  <t t-esc="item['display_start']"/>
+                                </td>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_title">
+                      <h2>
+                        Top 5 Opportunities
+                        <small>in Expected Premium</small>
+                      </h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-up"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"/>
+                    </div>
+                    <div class="x_content">
+                      <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                          <thead>
+                            <tr class="headings">
+                              <!-- <th class="column-title">Type </th> -->
+                              <!--  <th class="column-title">LOB</th> -->
+                              <!-- <th class="column-title">Customer </th> -->
+                              <th class="column-title">Opportunity</th>
+                              <!-- <th class="column-title">Term </th> -->
+                              <th class="column-title text-right">Premium</th>
+                              <!-- <th class="column-title">Probability</th> -->
+                              <!-- <th class="column-title">Stage</th>
+                              <th class="column-title">Sales Channel </th>
+                              <th class="column-title">Sales person </th> -->
+                            </tr>
+                          </thead>
+                          <tbody id="opportunities">
+                            <t t-foreach="widget.info['GetTop']['opp']" t-as="item">
+                              <tr t-attf-class="{{item_parity}} pointer">
+                                <td>
+                                  <t t-esc="item['display_name']"/>
+                                </td>
+                                <td class="text-right">
+                                  <t t-esc="widget.makeNumber(item['planned_revenue'])"/>
+                                </td>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_title">
+                      <h2>Top 5 Policy</h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-up"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"/>
+                    </div>
+                    <div class="x_content">
+                      <div class="dashboard-widget-content">
+                        <div class="table-responsive">
+                          <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                              <tr class="headings">
+                                <th class="column-title">Type</th>
+                                <th class="column-title">LOB</th>
+                                <th class="column-title">Insurer</th>
+                                <th class="column-title">Product</th>
+                                <th class="column-title">Customer</th>
+                                <th class="column-title">Policy No</th>
+                                <th class="column-title">End</th>
+                                <th class="column-title">R</th>
+                                <th class="column-title">Issue on</th>
+                                <!--  <th class="column-title">Effective F </th>
+                              <th class="column-title">Effective To</th>
+                              <th class="column-title">Gros Prem </th> -->
+                                <th class="column-title text-right">Net Prem</th>
+                              </tr>
+                            </thead>
+                            <tbody id="policyes">
+                              <t t-foreach="widget.info['GetTop']['pol']" t-as="item">
+                                <tr t-attf-class="{{item_parity}} pointer">
+                                  <td>
+                                    <t t-esc="item['insurance_type']"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['line_of_bussines'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['company'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['product_policy'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['customer'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['std_id']"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['edit_number']"/>
+                                  </td>
+                                  <td>
+                                    <!--  <t t-if="item['renwal_check']"> -->
+                                    <input type='checkbox' t-attf-checked="item['renwal_check']"/>
+                                    <!--  </t>
+                                      <input type='checkbox'/> -->
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['issue_date']"/>
+                                  </td>
+                                  <td class="text-right">
+                                    <t t-esc="widget.makeNumber(item['t_permimum'])"/>
+                                  </td>
+                                </tr>
+                              </t>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_title">
+                      <h2>Top 5 Claims</h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-up"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"/>
+                    </div>
+                    <div class="x_content">
+                      <div class="dashboard-widget-content">
+                        <div class="table-responsive">
+                          <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                              <tr class="headings">
+                                <th class="column-title">Type</th>
+                                <th class="column-title">LOB</th>
+                                <th class="column-title">Insurer</th>
+                                <th class="column-title">Product</th>
+                                <th class="column-title">Customer</th>
+                                <th class="column-title">Policy Number</th>
+                                <th class="column-title">Claim Number</th>
+                                <th class="column-title">Expected</th>
+                                <th class="column-title">Total Setteled</th>
+                                <th class="column-title">Total Paid</th>
+                                <th class="column-title">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody id="claims">
+                              <t t-foreach="widget.info['GetTop']['claim']" t-as="item">
+                                <tr t-attf-class="{{item_parity}} pointer">
+                                  <td>
+                                    <t t-esc="item['insured']"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['lob'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['insurer'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['product'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['customer_policy'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['policy_number'][1]"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['name']"/>
+                                  </td>
+                                  <td class="text-right">
+                                    <t t-esc="widget.makeNumber(item['totalclaimexp'])"/>
+                                  </td>
+                                  <td class="text-right">
+                                    <t t-esc="widget.makeNumber(item['totalsettled'])"/>
+                                  </td>
+                                  <td class="text-right">
+                                    <t t-esc="widget.makeNumber(item['total_paid_amount'])"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="item['claimstatus']"/>
+                                  </td>
+                                </tr>
+                              </t>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-2">
+              <!-- top tiles -->
+              <div class="row tile_count">
+                <div class="col-md-12 col-sm-4 col-xs-6 tile_stats_count" id="leads">
+                  <div class="x_panel custome_x_panel" style="height: auto;">
+                    <div class="x_title">
+                      <ul class="nav navbar-right panel_toolbox custome_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-down"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix" style="display: none;"/>
+                      <div class="">
+                        <span class="count_top">
+                          <i class="fa fa-user"/>
+                          Leads
+                        </span>
+                        <div class="count" id="leads-number">
+                          <t t-esc="widget.info['Leads']"/>
+                        </div>
+                        <span class="count_bottom ratio">
+                          <i class="red">
+                            <t t-esc="widget.makeNumber(widget.info['LeadsRatio'])"/>
+                            %
+                          </i>
+                          From last Month
+                        </span>
+                      </div>
+                    </div>
+                    <div class="x_content custome_x_content">
+                      <!-- content -->
+                      <div class="box-body">
+                        <p>
+                          Avg Count/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Leads']/widget.info['Agent'])"/>
+                          <strong/>
+                        </p>
+                      </div>
+                      <div class="clearfix"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-4 col-xs-6 tile_stats_count" id="new">
+                  <div class="x_panel custome_x_panel" style="height: auto;">
+                    <div class="x_title">
+                      <ul class="nav navbar-right panel_toolbox custome_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-down"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix" style="display: none;"/>
+                      <div class="">
+                        <span class="count_top">
+                          <i class="fa fa-user"/>
+                          New
+                        </span>
+                        <div class="count" id="new_prem">
+                          <t t-esc="widget.makeNumber(widget.info['New'][0])"/>
+                          $
+                        </div>
+                        <span class="count_bottom ratio">
+                          <i class="red">
+                            <!--<t t-esc="widget.makeNumber(widget.info['New'][1])"></t> %-->
+                          </i>
+                          From last Month
+                        </span>
+                      </div>
+                    </div>
+                    <div class="x_content custome_x_content">
+                      <!-- content -->
+                      <div class="box-body">
+                        <p>
+                          Count:
+                          <t t-esc="widget.makeNumber(widget.info['New'][1])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/opp:
+                          <t t-esc="widget.makeNumber(widget.info['New'][2])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['New'][3])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg Count/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['New'][4])"/>
+                          <strong/>
+                        </p>
+                      </div>
+                      <div class="clearfix"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-4 col-xs-6 tile_stats_count" id="qualified">
+                  <div class="x_panel custome_x_panel" style="height: auto;">
+                    <div class="x_title">
+                      <ul class="nav navbar-right panel_toolbox custome_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-down"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix" style="display: none;"/>
+                      <div class="">
+                        <span class="count_top">
+                          <i class="fa fa-user"/>
+                          qualified
+                        </span>
+                        <div class="count" id="new_prem">
+                          <t t-esc="widget.makeNumber(widget.info['Qualified'][0])"/>
+                          $
+                        </div>
+                        <span class="count_bottom ratio">
+                          <i class="red">
+                            <!-- <t t-esc="widget.makeNumber(widget.info['Qualified'])"></t> %-->
+                          </i>
+                          From last Month
+                        </span>
+                      </div>
+                    </div>
+                    <div class="x_content custome_x_content">
+                      <!-- content -->
+                      <div class="box-body">
+                        <p>
+                          Count:
+                          <t t-esc="widget.makeNumber(widget.info['Qualified'][1])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/opp:
+                          <t t-esc="widget.makeNumber(widget.info['Qualified'][2])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Qualified'][3])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg Count/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Qualified'][4])"/>
+                          <strong/>
+                        </p>
+                      </div>
+                      <div class="clearfix"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-4 col-xs-6 tile_stats_count" id="proposition">
+                  <div class="x_panel custome_x_panel" style="height: auto;">
+                    <div class="x_title">
+                      <ul class="nav navbar-right panel_toolbox custome_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-down"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix" style="display: none;"/>
+                      <div class="">
+                        <span class="count_top">
+                          <i class="fa fa-user"/>
+                          Proposition
+                        </span>
+                        <div class="count" id="new_prem">
+                          <t t-esc="widget.makeNumber(widget.info['Proposition'][0])"/>
+                          $
+                        </div>
+                        <span class="count_bottom ratio">
+                          <!--<i class="red"> <t t-esc="widget.makeNumber(widget.info['Leads'])"></t> %</i>-->
+                          From last Month
+                        </span>
+                      </div>
+                    </div>
+                    <div class="x_content custome_x_content">
+                      <!-- content -->
+                      <div class="box-body">
+                        <p>
+                          Count:
+                          <t t-esc="widget.makeNumber(widget.info['Proposition'][1])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/opp:
+                          <t t-esc="widget.makeNumber(widget.info['Proposition'][2])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Proposition'][3])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg Count/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Proposition'][4])"/>
+                          <strong/>
+                        </p>
+                      </div>
+                      <div class="clearfix"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-4 col-xs-6 tile_stats_count" id="won">
+                  <div class="x_panel custome_x_panel" style="height: auto;">
+                    <div class="x_title">
+                      <ul class="nav navbar-right panel_toolbox custome_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-down"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix" style="display: none;"/>
+                      <div class="">
+                        <span class="count_top">
+                          <i class="fa fa-user"/>
+                          Won
+                        </span>
+                        <div class="count" id="new_prem">
+                          <t t-esc="widget.makeNumber(widget.info['Won'][0])"/>
+                          $
+                        </div>
+                        <span class="count_bottom ratio">
+                          <i class="red">
+                            <!--<t t-esc="widget.makeNumber(widget.info['Won'][1])"></t> %-->
+                          </i>
+                          From last Month
+                        </span>
+                      </div>
+                    </div>
+                    <div class="x_content custome_x_content">
+                      <!-- content -->
+                      <div class="box-body">
+                        <p>
+                          Count:
+                          <t t-esc="widget.makeNumber(widget.info['Won'][1])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/opp:
+                          <t t-esc="widget.makeNumber(widget.info['Won'][2])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Won'][3])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg Count/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Won'][4])"/>
+                          <strong/>
+                        </p>
+                      </div>
+                      <div class="clearfix"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-4 col-xs-6 tile_stats_count" id="lost">
+                  <div class="x_panel custome_x_panel" style="height: auto;">
+                    <div class="x_title">
+                      <ul class="nav navbar-right panel_toolbox custome_toolbox">
+                        <li style="float: right;">
+                          <a class="collapse-link">
+                            <i class="fa fa-chevron-down"/>
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="clearfix" style="display: none;"/>
+                      <div class="">
+                        <span class="count_top">
+                          <i class="fa fa-user"/>
+                          Lost
+                        </span>
+                        <div class="count" id="new_prem">
+                          <t t-esc="widget.makeNumber(widget.info['Lost'][0])"/>
+                          $
+                        </div>
+                        <span class="count_bottom ratio">
+                          <i class="red">
+                            <!-- <t t-esc="widget.makeNumber(widget.info['Lost'][1])"></t> %-->
+                          </i>
+                          From last Month
+                        </span>
+                      </div>
+                    </div>
+                    <div class="x_content custome_x_content">
+                      <!-- content -->
+                      <div class="box-body">
+                        <p>
+                          Count:
+                          <t t-esc="widget.makeNumber(widget.info['Lost'][1])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/opp:
+                          <t t-esc="widget.makeNumber(widget.info['Lost'][2])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg/Agent:
+                          <t t-esc="widget.makeNumber(widget.info['Lost'][3])"/>
+                          <strong/>
+                        </p>
+                        <p>
+                          Avg Count/Agent:
+                          <t t-esc="widget.makeNumber(widget.makeNumber(widget.info['Lost'][4]))"/>
+                          <strong/>
+                        </p>
+                      </div>
+                      <div class="clearfix"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /top tiles -->
+            </div>
+            <!-- end first row -->
+          </div>
+          <!-- end of weather widget -->
+        </div>
+        <!-- /page content -->
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Template by
+            <a href="http://www.blackbelts-egypt.com/">Black Belts</a>
+          </div>
+          <div class="clearfix"/>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+    <xpath expr="." position="inside">
+      <script src="/hrms_dashboard/static/src/js/Chart.min.js" type="text/javascript"/>
+    </xpath>
+  </t>
+</templates>
