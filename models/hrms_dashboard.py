@@ -94,6 +94,7 @@ class crm(models.Model):
         else:
            return [((lead_curent-lead_prev)/(lead_prev))*100]
 
+
     @api.model
     def get_drop_avg(self):
         return[(self.get_No_leads()[0]/self.get_No_agent()[0])]
@@ -110,6 +111,26 @@ class crm(models.Model):
             total_palnned+=rec.planned_revenue
         print(len(opp_new))
         return self._cal_stage_data(total_palnned,len(opp_new))
+
+    @api.model
+    def get_new_ratio(self,stage_id):
+        current_month = datetime.today().strftime('%Y-%m')
+        set_date = datetime.strptime(current_month, '%Y-%m').date()
+        prev_month = set_date - relativedelta(months=1)
+        month = prev_month.strftime('%Y-%m')
+        new_curent = self.env['crm.lead'].search([('active', '=', 1), ('stage_id', '=', stage_id), ('create_date', 'ilike', current_month)])
+        total_palnned = 0.0
+        for rec in new_curent:
+            total_palnned += rec.planned_revenue
+        new_prev = self.env['crm.lead'].search([('active', '=', 1), ('stage_id', '=', 'New'), ('create_date', 'ilike', month)])
+        total_palnned_prev = 0.0
+        for rec in new_prev:
+            total_palnned_prev += rec.planned_revenue
+        if total_palnned_prev == 0:
+            print(total_palnned , total_palnned_prev)
+            return [100]
+        else:
+            return [((total_palnned - total_palnned_prev) / (total_palnned_prev)) * 100]
 
     @api.model
     def get_qualified_opp(self):
@@ -175,7 +196,7 @@ class crm(models.Model):
             total_line = 0.0
             for rec2 in pol:
                 total_line += rec2.t_permimum
-            res.append({"lob":rec.display_name,"perc":(total_line / 1) * 100}) ###########################
+            res.append({"lob":rec.display_name,"perc":(total_line / total) * 100}) ###########################
         return res
 
     @api.model
@@ -195,7 +216,7 @@ class crm(models.Model):
 
     @api.model
     def get_dashboard(self):
-
+        self.get_new_ratio('Qualified')
         return{
             'ExpectedPrem':self.get_premium(),
             'Gross/Net':self.get_gross(),
