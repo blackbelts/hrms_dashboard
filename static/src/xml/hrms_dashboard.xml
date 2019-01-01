@@ -31,21 +31,6 @@
     </xpath>
     <div class="nav-sm">
       <div class="container body">
-        <div class="main_container">
-          <!-- <div class="col-md-3 left_col menu_fixed">
-         <div class="left_col scroll-view">
-
-          <div class="clearfix"></div>
-          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            <div class="menu_section">
-              <ul class="nav side-menu">
-                <li><a href="index.html"><i class="fa fa-home"></i> Production</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> -->
-        </div>
         <!-- page content -->
         <div class="right_col" role="main">
 
@@ -507,10 +492,18 @@
                           <t t-esc="widget.info['Leads']"/>
                         </div>
                         <span class="count_bottom ratio">
-                          <i class="red">
-                            <t t-esc="widget.makeNumber(widget.info['LeadsRatio'])"/>
-                            %
-                          </i>
+                          <span t-if="widget.info['LeadsRatio']>0">
+                            <i class="green">
+                              <t t-esc="widget.makeNumber(widget.info['LeadsRatio'])"/>
+                              %
+                            </i>
+                          </span>
+                          <span t-else="">
+                            <i class="red">
+                              <t t-esc="widget.makeNumber(widget.info['LeadsRatio'])"/>
+                              %
+                            </i>
+                          </span>
                           From last Month
                         </span>
                       </div>
@@ -549,9 +542,18 @@
                           $
                         </div>
                         <span class="count_bottom ratio">
-                          <i class="red">
-                            <!--<t t-esc="widget.makeNumber(widget.info['New'][1])"></t> %-->
-                          </i>
+                          <span t-if="widget.info['NewRatio']>0">
+                            <i class="green">
+                              <t t-esc="widget.makeNumber(widget.info['NewRatio'])"/>
+                              %
+                            </i>
+                          </span>
+                          <span t-else="">
+                            <i class="red">
+                              <t t-esc="widget.makeNumber(widget.info['NewRatio'])"/>
+                              %
+                            </i>
+                          </span>
                           From last Month
                         </span>
                       </div>
@@ -605,9 +607,18 @@
                           $
                         </div>
                         <span class="count_bottom ratio">
-                          <i class="red">
-                            <!-- <t t-esc="widget.makeNumber(widget.info['Qualified'])"></t> %-->
-                          </i>
+                          <span t-if="widget.info['QualifiedRatio']>0">
+                            <i class="green">
+                              <t t-esc="widget.makeNumber(widget.info['QualifiedRatio'])"/>
+                              %
+                            </i>
+                          </span>
+                          <span t-else="">
+                            <i class="red">
+                              <t t-esc="widget.makeNumber(widget.info['QualifiedRatio'])"/>
+                              %
+                            </i>
+                          </span>
                           From last Month
                         </span>
                       </div>
@@ -661,7 +672,18 @@
                           $
                         </div>
                         <span class="count_bottom ratio">
-                          <!--<i class="red"> <t t-esc="widget.makeNumber(widget.info['Leads'])"></t> %</i>-->
+                          <span t-if="widget.info['PropositionRatio']>0">
+                            <i class="green">
+                              <t t-esc="widget.makeNumber(widget.info['PropositionRatio'])"/>
+                              %
+                            </i>
+                          </span>
+                          <span t-else="">
+                            <i class="red">
+                              <t t-esc="widget.makeNumber(widget.info['PropositionRatio'])"/>
+                              %
+                            </i>
+                          </span>
                           From last Month
                         </span>
                       </div>
@@ -715,9 +737,18 @@
                           $
                         </div>
                         <span class="count_bottom ratio">
-                          <i class="red">
-                            <!--<t t-esc="widget.makeNumber(widget.info['Won'][1])"></t> %-->
-                          </i>
+                          <span t-if="widget.info['WonRatio']>0">
+                            <i class="green">
+                              <t t-esc="widget.makeNumber(widget.info['WonRatio'])"/>
+                              %
+                            </i>
+                          </span>
+                          <span t-else="">
+                            <i class="red">
+                              <t t-esc="widget.makeNumber(widget.info['WonRatio'])"/>
+                              %
+                            </i>
+                          </span>
                           From last Month
                         </span>
                       </div>
@@ -771,9 +802,18 @@
                           $
                         </div>
                         <span class="count_bottom ratio">
-                          <i class="red">
-                            <!-- <t t-esc="widget.makeNumber(widget.info['Lost'][1])"></t> %-->
-                          </i>
+                          <span t-if="widget.info['LostRatio']>0">
+                            <i class="green">
+                              <t t-esc="widget.makeNumber(widget.info['LostRatio'])"/>
+                              %
+                            </i>
+                          </span>
+                          <span t-else="">
+                            <i class="red">
+                              <t t-esc="widget.makeNumber(widget.info['LostRatio'])"/>
+                              %
+                            </i>
+                          </span>
                           From last Month
                         </span>
                       </div>

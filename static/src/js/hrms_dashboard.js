@@ -31,7 +31,6 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
       'click #broad_factor_pdf': 'generate_broad_factor_report', */
     },
     init: function (parent, context) {
-      console.log("inti")
       this._super(parent, context);
       this.action_id = context.id;
       this._super(parent, context);
@@ -51,6 +50,7 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
             $('.o_hr_dashboard').prepend(QWeb.render('dashInfo', {
               widget: self
             }));
+            $(".o_control_panel").addClass("o_hidden")
             $(function () {
               if (window.matchMedia('(max-width: 775px)').matches) {
                 $("#policylineChart").get(0).height = 210;
@@ -76,7 +76,6 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
       return parseFloat(x).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     },
     checkIndexOddEven: function (index) {
-      console.log(index)
       if (index % 2 == 0)
         return "even"
       else
@@ -113,15 +112,12 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
       };
       var content = "",
         i = 0;
-      console.log(datalist)
       datalist.forEach(function (item) {
 
         content += "<tr>" + '<td><p><i class="fa fa-square" style="color:' + colors[i] + '"></i>' + labels[i] + "</p></td><td style='text-align:right'>" + parseFloat(item).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</td> </tr>"
         i++;
 
       })
-      console.log("test")
-      console.log(content)
       $("td .tile_info").append(content)
       $(".policypieChart").each(function () {
         var b = $(this);
@@ -130,9 +126,7 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
     },
     targetGraph: function (data = []) {
       $("document").ready(function () {
-
         var ctx = $("#policylineChart");
-        console.log(ctx)
         var lineChart = new Chart(ctx, {
           type: 'line',
           data: {
@@ -195,14 +189,25 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
       datalist.forEach(function (item) {
         cont += '<div class="widget_summary"><div class="w_left w_25">' +
           ' <span>' + labels[labelIndex] + '</span></div>' +
-          '<div class="w_center w_55"><div class="progress"><div class="progress-bar bg-green" role="progressbar" aria-valuenow="' + ((item ).toFixed(2)) + '" aria-valuemin="0"' +
-          'aria-valuemax="100" style="width:' + ((item ).toFixed(2)) + '%;"><!-- change width --> <span class = "sr-only" >Complete < /span> </div > </div> </div >' +
+          '<div class="w_center w_55"><div class="progress"><div class="progress-bar bg-green" role="progressbar" aria-valuenow="' + ((item).toFixed(2)) + '" aria-valuemin="0"' +
+          'aria-valuemax="100" style="width:' + ((item).toFixed(2)) + '%;"><!-- change width --> <span class = "sr-only" >Complete < /span> </div > </div> </div >' +
           '<div class="w_right w_20"><span>' + ((item).toFixed(2)) + ' %</span></div><div class="clearfix"></div></div>';
         labelIndex++;
       })
       $("#bars").append(cont);
+    },
+    returnClass: function (value) {
+      console.log(value)
+      if (value <= 0) {
+        console.log(true)
+        return true
+      } else {
+        console.log(false)
+        return false
+      }
     }
   });
+
   core.action_registry.add('hr_dashboard', HrDashboard);
   return HrDashboard;
 });
