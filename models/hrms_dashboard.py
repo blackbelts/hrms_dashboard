@@ -33,6 +33,17 @@ class crm(models.Model):
         return [total, gross]
 
     @api.model
+    def get_commissions(self):
+        total_commission = 0.0
+        com_commission = 0.0
+        policy = self.env['policy.broker'].search([])
+        for rec in policy:
+            total_commission += rec.total_brokerages
+            com_commission += rec.production_commission
+            print(total_commission, com_commission)x
+        return [total_commission, com_commission]
+
+    @api.model
     def get_claim(self):
         totalsettled = 0.0
         total_paid_amount = 0.0
@@ -216,8 +227,9 @@ class crm(models.Model):
 
     @api.model
     def get_dashboard(self):
-        self.get_new_ratio('Qualified')
+
         return{
+            "comBrok":self.get_commissions(),
             'ExpectedPrem':self.get_premium(),
             'Gross/Net':self.get_gross(),
             'claim':self.get_claim(),
