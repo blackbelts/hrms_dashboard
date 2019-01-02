@@ -95,9 +95,15 @@
                     <i class="fa fa-user"/>
                     Brokerage
                   </span>
-                  <div class="count" id="brokerage-b"/>
+                  <div class="count" id="brokerage-b">
+                    <t t-esc="widget.makeNumber(widget.info['comBrok'][0])"/>
+                    $
+                  </div>
                   <span class="count_bottom">
-                    <i class="green" id="brokerage-percom"/>
+                    <i class="green" id="brokerage-percom">
+                      <t t-esc="widget.makeNumber(widget.info['comBrok'][1])"/>
+                      $
+                    </i>
                     person Commision
                   </span>
                 </div>
