@@ -40,7 +40,7 @@ class crm(models.Model):
         for rec in policy:
             total_commission += rec.total_brokerages
             com_commission += rec.production_commission
-            print(total_commission, com_commission)x
+            print(total_commission, com_commission)
         return [total_commission, com_commission]
 
     @api.model
@@ -125,11 +125,16 @@ class crm(models.Model):
 
     @api.model
     def get_new_ratio(self,stage_id):
+        domain=[]
+        if stage_id == "Lost":
+           domain= ('active', '!=', 1)
+        else:
+            domain=('active', '=', 1)
         current_month = datetime.today().strftime('%Y-%m')
         set_date = datetime.strptime(current_month, '%Y-%m').date()
         prev_month = set_date - relativedelta(months=1)
         month = prev_month.strftime('%Y-%m')
-        new_curent = self.env['crm.lead'].search([('active', '=', 1), ('stage_id', '=', stage_id), ('create_date', 'ilike', current_month)])
+        new_curent = self.env['crm.lead'].search([domain, ('stage_id', '=', stage_id), ('create_date', 'ilike', current_month)])
         total_palnned = 0.0
         for rec in new_curent:
             total_palnned += rec.planned_revenue
@@ -207,7 +212,7 @@ class crm(models.Model):
             total_line = 0.0
             for rec2 in pol:
                 total_line += rec2.t_permimum
-            res.append({"lob":rec.display_name,"perc":(total_line / total) * 100}) ###########################
+            res.append({"lob":rec.display_name,"perc":(total_line / 1) * 100}) ###########################
         return res
 
     @api.model
@@ -230,21 +235,30 @@ class crm(models.Model):
 
         return{
             "comBrok":self.get_commissions(),
+            'NewRatio':self.get_new_ratio('New'),
+            'QualifiedRatio':self.get_new_ratio('Qualified'),
+            'PropositionRatio':self.get_new_ratio('Proposition'),
+            'WonRatio':self.get_new_ratio('Won'),
+            'LostRatio':self.get_new_ratio('Lost'),
             'ExpectedPrem':self.get_premium(),
             'Gross/Net':self.get_gross(),
             'claim':self.get_claim(),
             'Agent':self.get_No_agent()[0],
-              'TotalSigned':self.get_invoice(),
+            'TotalSigned':self.get_invoice(),
             'Meeting':self.get_top_meeting(),
             'GetTop':self.get_top_opp_policy_claim(),
-            'Leads':self.get_No_leads(),'LeadsRatio':self.get_leads_ratio(),
-               'DropAvg':self.get_drop_avg(),'New':self.get_new_opp(),'Qualified':self.get_qualified_opp(),'Proposition':self.get_proposition_opp(),'Won':self.get_won_opp(),
-               'Lost':self.get_lost_opp(),'TargetGraph':self.target_graph(),'InsurerGraph':self.get_insurer_policy(),'Lob':self.get_line_policy()}
-
-
-
-
-
+            'Leads':self.get_No_leads(),
+            'LeadsRatio':self.get_leads_ratio(),
+            'DropAvg':self.get_drop_avg(),
+            'New':self.get_new_opp(),
+            'Qualified':self.get_qualified_opp(),
+            'Proposition':self.get_proposition_opp(),
+            'Won':self.get_won_opp(),
+            'Lost':self.get_lost_opp(),
+            'TargetGraph':self.target_graph(),
+            'InsurerGraph':self.get_insurer_policy(),
+            'Lob':self.get_line_policy()
+        }
     # @api.model
     # def get_qualified_opp(self):
     #     policy = self.env['policy.broker'].search([('issue_date', 'ilike', setdate)])
