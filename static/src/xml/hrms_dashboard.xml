@@ -140,8 +140,8 @@
             <div class="col-md-10 col-sm-12 col-xs-12">
               <div class="clearfix"/>
               <div class="row ">
-                <div class="col-sm-4 col-xs-12 fixedHeight">
-                  <div class="x_panel fixedHeight">
+                <div class="col-sm-4 col-xs-12 ">
+                  <div class="x_panel">
                     <div class="x_title">
                       <h2 class="custome-h2">
                         Target Graph
@@ -156,13 +156,13 @@
                       </ul>
                       <div class="clearfix"/>
                     </div>
-                    <div class="x_content" id='target'>
+                    <div class="x_content fixedHeight"  id='target'>
                       <canvas id="policylineChart" />
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-4  col-xs-12 fixedHeight">
-                  <div class="x_panel fixedHeight">
+                <div class="col-sm-4  col-xs-12 ">
+                  <div class="x_panel ">
                     <div class="x_title">
                       <h2 class="custome-h2">
                         Net Premium vs Insurer
@@ -177,7 +177,7 @@
                       </ul>
                       <div class="clearfix"/>
                     </div>
-                    <div class="x_content">
+                    <div class="x_content fixedHeight" id="insurer">
                       <table class="" style="width:100%">
                         <!-- <tr>
                         <th style="width:37%;">
@@ -207,8 +207,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-4  col-xs-12">
-                  <div class="x_panel fixedHeight">
+                <div class="col-sm-4  col-xs-12 ">
+                  <div class="x_panel ">
                     <div class="x_title">
                       <h2 class="custome-h2">
                         Net Premium vs LOB
@@ -223,7 +223,7 @@
                       </ul>
                       <div class="clearfix"/>
                     </div>
-                    <div class="x_content" id='bars'>
+                    <div class="x_content fixedHeight" id='bars'>
                     </div>
                   </div>
                 </div>

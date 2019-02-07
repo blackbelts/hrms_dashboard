@@ -40,9 +40,9 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
       var self = this;
       self.colors = ['rgba(34, 102, 102,1)', 'rgba(0,196,194,1)', 'rgba(60,141,188,0.9)', 'rgba(47,94,117,1)', 'rgba(51,34,136,1)', 'rgba(33,151,238)', 'rgba(255,63,121,1)', "rgba(255,211,70,1)", 'rgba(0,104,185,1)', 'rgba(46,135,190,1)', 'rgba(1,7,102,1)', 'rgba(30,132,208,1)', 'rgba(255,63,121,1)', 'rgba(92,0,32,1)']
       rpc.query({
-          model: "dashboard",
-          method: "get_dashboard",
-        })
+        model: "dashboard",
+        method: "get_dashboard",
+      })
         .then(function (result) {
           if (result) {
             console.log(result)
@@ -82,96 +82,114 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
         return "odd"
     },
     insurenceGraph: function (data) {
-      var datalist = [],
-        labels = [],
-        colors = ['rgba(34, 102, 102,1)', 'rgba(0,196,194,1)', 'rgba(60,141,188,0.9)', 'rgba(47,94,117,1)', 'rgba(51,34,136,1)', 'rgba(33,151,238)', 'rgba(255,63,121,1)', "rgba(255,211,70,1)", 'rgba(0,104,185,1)', 'rgba(46,135,190,1)', 'rgba(1,7,102,1)', 'rgba(30,132,208,1)', 'rgba(255,63,121,1)', 'rgba(92,0,32,1)'];
-      data.forEach(function (item) {
-        Object.keys(item).forEach(function (k) {
-          if (k == "name")
-            labels.push(item[k])
-          else
-            datalist.push(item[k])
+      if (data.length == 0) {
+        $('#insurer table').remove()
+        $('#insurer').append("<p class='lead' style='margin-top:50px'>Data Not Completed to make this Graph</p>")
+      }
+      else {
+        var datalist = [],
+          labels = [],
+          colors = ['rgba(34, 102, 102,1)', 'rgba(0,196,194,1)', 'rgba(60,141,188,0.9)', 'rgba(47,94,117,1)', 'rgba(51,34,136,1)', 'rgba(33,151,238)', 'rgba(255,63,121,1)', "rgba(255,211,70,1)", 'rgba(0,104,185,1)', 'rgba(46,135,190,1)', 'rgba(1,7,102,1)', 'rgba(30,132,208,1)', 'rgba(255,63,121,1)', 'rgba(92,0,32,1)'];
+        data.forEach(function (item) {
+          Object.keys(item).forEach(function (k) {
+            if (k == "name")
+              labels.push(item[k])
+            else
+              datalist.push(item[k])
+          })
         })
-      })
 
-      var a = {
-        type: "doughnut",
-        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-        data: {
-          labels: labels,
-          datasets: [{
-            data: datalist,
-            backgroundColor: colors.slice(0, datalist.length),
-            hoverBackgroundColor: colors.slice(0, datalist.length)
-          }]
-        },
-        options: {
-          legend: !1,
-          responsive: !1
-        }
-      };
-      var content = "",
-        i = 0;
-      datalist.forEach(function (item) {
-
-        content += "<tr>" + '<td><p><i class="fa fa-square" style="color:' + colors[i] + '"></i>' + labels[i] + "</p></td><td style='text-align:right'>" + parseFloat(item).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</td> </tr>"
-        i++;
-
-      })
-      $("td .tile_info").append(content)
-      $(".policypieChart").each(function () {
-        var b = $(this);
-        new Chart(b, a)
-      })
-    },
-    targetGraph: function (data = []) {
-      $("document").ready(function () {
-        var ctx = $("#policylineChart");
-        var lineChart = new Chart(ctx, {
-          type: 'line',
+        var a = {
+          type: "doughnut",
+          tooltipFillColor: "rgba(51, 51, 51, 0.55)",
           data: {
-            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            labels: labels,
             datasets: [{
-              label: "Net permimum",
-              backgroundColor: "rgba(38, 185, 154, 0.31)",
-              borderColor: "rgba(38, 185, 154, 0.7)",
-              pointBorderColor: "rgba(38, 185, 154, 0.7)",
-              pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgba(220,220,220,1)",
-              pointBorderWidth: 1,
-              data: data,
-              steppedLine: true,
-              lineTension: 0,
-              fill: false,
-            }, {
-              label: "Target Line",
-              backgroundColor: "rgba(38,89,144, 0.3)",
-              borderColor: "rgba(38,89,144, 0.70)",
-              pointBorderColor: "rgba(38,89,144, 0.70)",
-              pointBackgroundColor: "rgba(38,89,144, 0.70)",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgba(38,89,144,1)",
-              pointBorderWidth: 1,
-              data: [100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000],
-              fill: false,
+              data: datalist,
+              backgroundColor: colors.slice(0, datalist.length),
+              hoverBackgroundColor: colors.slice(0, datalist.length)
             }]
           },
           options: {
             legend: !1,
-            responsive: true,
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
-            }
+            responsive: !1
           }
+        };
+        var content = "",
+          i = 0;
+        datalist.forEach(function (item) {
+
+          content += "<tr>" + '<td><p><i class="fa fa-square" style="color:' + colors[i] + '"></i>' + labels[i] + "</p></td><td style='text-align:right'>" + parseFloat(item).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</td> </tr>"
+          i++;
+
+        })
+        $("td .tile_info").append(content)
+        $(".policypieChart").each(function () {
+          var b = $(this);
+          new Chart(b, a)
+        })
+      }
+
+
+    },
+    targetGraph: function (data = []) {
+      if (data.length == 0) {
+        $('#target').append("<p class='lead' style='margin-top:50px'>Data Not Completed to make this Graph</p>")
+      }
+      else {
+        $("document").ready(function () {
+          var ctx = $("#policylineChart");
+          var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+              datasets: [{
+                label: "Net permimum",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: data,
+                steppedLine: true,
+                lineTension: 0,
+                fill: false,
+              }, {
+                label: "Target Line",
+                backgroundColor: "rgba(38,89,144, 0.3)",
+                borderColor: "rgba(38,89,144, 0.70)",
+                pointBorderColor: "rgba(38,89,144, 0.70)",
+                pointBackgroundColor: "rgba(38,89,144, 0.70)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(38,89,144,1)",
+                pointBorderWidth: 1,
+                data: [100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000],
+                fill: false,
+              }]
+            },
+            options: {
+              legend: !1,
+              responsive: true,
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              }
+            }
+          });
         });
-      });
+      }
     },
     lobGraph: function (data = []) {
+      if (data.length == 0)
+      {
+        $('#bars').append("<p class='lead' style='margin-top:50px'>Data Not Completed to make this Graph</p>")
+      }
+      else {
       var datalist = [],
         labels = [],
         sum = 0,
@@ -195,7 +213,7 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
         labelIndex++;
       })
       $("#bars").append(cont);
-    },
+    }},
     returnClass: function (value) {
       console.log(value)
       if (value <= 0) {

@@ -55,7 +55,7 @@ class crm(models.Model):
 
     @api.model
     def get_No_agent(self):
-        return [len(self.env['res.partner'].search([('agent', '=', 1)]))]
+        return len(self.env['res.partner'].search([('agent', '=', 1)])) if len(self.env['res.partner'].search([('agent', '=', 1)]))> 0 else 1
 
     @api.model
     def get_invoice(self):
@@ -108,11 +108,11 @@ class crm(models.Model):
 
     @api.model
     def get_drop_avg(self):
-        return[(self.get_No_leads()[0]/self.get_No_agent()[0])]
+        return[(self.get_No_leads()[0]/self.get_No_agent())]
 
 
     def _cal_stage_data(self,planned,count):
-        return [planned,count,(planned/count),(planned/self.get_No_agent()[0]),(count/self.get_No_agent()[0])]
+        return [planned,count,(planned/count),(planned/self.get_No_agent()),(count/self.get_No_agent())]
 
     @api.model
     def get_new_opp(self):
@@ -243,7 +243,7 @@ class crm(models.Model):
             'ExpectedPrem':self.get_premium(),
             'Gross/Net':self.get_gross(),
             'claim':self.get_claim(),
-            'Agent':self.get_No_agent()[0],
+            'Agent':self.get_No_agent(),
             'TotalSigned':self.get_invoice(),
             'Meeting':self.get_top_meeting(),
             'GetTop':self.get_top_opp_policy_claim(),

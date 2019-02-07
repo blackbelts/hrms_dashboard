@@ -28,7 +28,9 @@ iframe {
  .fixedHeight {
    min-height: 240px;
  }
-
+ .fixedHeight:hover {
+  overflow-y: scroll;
+}
  @media (max-width: 992px) {
    .fixedHeight {
      min-height: 0px;
