@@ -84,7 +84,7 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
     insurenceGraph: function (data) {
       if (data.length == 0) {
         $('#insurer table').remove()
-        $('#insurer').append("<p class='lead' style='margin-top:50px'>Data Not Completed to make this Graph</p>")
+        $('#insurer').append("<p class='lead' style='margin-top:10px'>Data Not Completed to make this Graph</p>")
       }
       else {
         var datalist = [],
@@ -134,7 +134,7 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
     },
     targetGraph: function (data = []) {
       if (data.length == 0) {
-        $('#target').append("<p class='lead' style='margin-top:50px'>Data Not Completed to make this Graph</p>")
+        $('#target').append("<p class='lead' style='margin-top:10px'>Data Not Completed to make this Graph</p>")
       }
       else {
         $("document").ready(function () {
@@ -187,7 +187,7 @@ odoo.define('hrms_dashboard.Dashboard', function (require) {
     lobGraph: function (data = []) {
       if (data.length == 0)
       {
-        $('#bars').append("<p class='lead' style='margin-top:50px'>Data Not Completed to make this Graph</p>")
+        $('#bars').append("<p class='lead' style='margin-top:10px'>Data Not Completed to make this Graph</p>")
       }
       else {
       var datalist = [],
