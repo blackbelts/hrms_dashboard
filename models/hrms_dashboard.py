@@ -39,8 +39,6 @@ class crm(models.Model):
         policy = self.env['policy.broker'].search([])
         for rec in policy:
             total_commission += rec.total_brokerages
-            com_commission += rec.production_commission
-            print(total_commission, com_commission)
         return [total_commission, com_commission]
 
     @api.model
@@ -212,7 +210,7 @@ class crm(models.Model):
             total_line = 0.0
             for rec2 in pol:
                 total_line += rec2.t_permimum
-            res.append({"lob":rec.display_name,"perc":(total_line / 1) * 100}) ###########################
+            res.append({"lob":rec.display_name,"perc":(total_line / total) * 100}) 
         return res
 
     @api.model
