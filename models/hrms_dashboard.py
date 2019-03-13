@@ -110,7 +110,12 @@ class crm(models.Model):
 
 
     def _cal_stage_data(self,planned,count):
-        return [planned,count,(planned/count),(planned/self.get_No_agent()),(count/self.get_No_agent())]
+        agent=self.get_No_agent()
+        if(count==0):
+            count=1
+        if(agent==0):
+            agent=1
+        return [planned,count,(planned/count),(planned/agent),(count/agent)]
 
     @api.model
     def get_new_opp(self):
