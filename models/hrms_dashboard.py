@@ -19,7 +19,10 @@ class crm(models.Model):
         for rec in opp:
            excepected_permum+=rec.planned_revenue
            prob+= rec.probability
-        res=prob/len(opp)
+        try: 
+            res=prob/len(opp)
+        except ZeroDivisionError:
+            res = 0.0
         return [excepected_permum,res]
 
     @api.model
@@ -98,24 +101,32 @@ class crm(models.Model):
 
         lead_curent=len(self.env['crm.lead'].search([('type', '=', 'lead'),('create_date','ilike',current_month)]))
         lead_prev = len(self.env['crm.lead'].search([('type', '=', 'lead'), ('create_date', 'ilike', month)]))
-        if lead_prev==0:
-            return [100]
-        else:
-           return [((lead_curent-lead_prev)/(lead_prev))*100]
+        # if lead_prev==0:
+        #     return [100]
+        # else:
+        try:
+            return [((lead_curent-lead_prev)/(lead_prev))*100]
+        except ZeroDivisionError:
+            return[(0,0)]
 
 
     @api.model
     def get_drop_avg(self):
-        return[(self.get_No_leads()[0]/self.get_No_agent())]
-
+        try:
+            return[(self.get_No_leads()[0]/self.get_No_agent())]
+        except ZeroDivisionError:
+            return[(0,0)]
 
     def _cal_stage_data(self,planned,count):
-        agent=self.get_No_agent()
-        if(count==0):
-            count=1
-        if(agent==0):
-            agent=1
-        return [planned,count,(planned/count),(planned/agent),(count/agent)]
+        agent = self.get_No_agent()
+        if count == 0 and agent == 0:
+            return [planned,count,(0,0),(0,0),(0,0)]
+        elif count == 0:
+            return [planned,count,(0,0),(planned/agent),(count/agent)]
+        elif agent == 0:
+            return [planned,count,(planned/count),(0,0),(0,0)]
+        else:
+            return [planned,count,(planned/count),(planned/agent),(count/agent)]
 
     @api.model
     def get_new_opp(self):
