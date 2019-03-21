@@ -226,7 +226,11 @@ class crm(models.Model):
             total_line = 0.0
             for rec2 in pol:
                 total_line += rec2.t_permimum
-            res.append({"lob":rec.display_name,"perc":(total_line / total) * 100}) 
+            try:
+                res.append({"lob":rec.display_name,"perc":(total_line / total) * 100})
+            except ZeroDivisionError:
+                res.append({"lob":rec.display_name,"perc":(0,0)})
+             
         return res
 
     @api.model
