@@ -141,7 +141,7 @@
               <div class="clearfix"/>
               <div class="row ">
                 <div class="col-sm-4 col-xs-12 ">
-                  <div class="x_panel">
+                  <div class="x_panel new_height">
                     <div class="x_title">
                       <h2 class="custome-h2">
                         Target Graph
@@ -162,7 +162,7 @@
                   </div>
                 </div>
                 <div class="col-sm-4  col-xs-12 ">
-                  <div class="x_panel ">
+                  <div class="x_panel new_height">
                     <div class="x_title">
                       <h2 class="custome-h2">
                         Net Premium vs Insurer
@@ -208,7 +208,7 @@
                   </div>
                 </div>
                 <div class="col-sm-4  col-xs-12 ">
-                  <div class="x_panel ">
+                  <div class="x_panel new_height">
                     <div class="x_title">
                       <h2 class="custome-h2">
                         Net Premium vs LOB

@@ -1693,6 +1693,9 @@ h4 .stat-count {
 
 
 .row.main-section {
-    margin-right: 0px;
-     !important;
+    margin-right: 0px!important;
+}
+.new_height {
+    height:316px ;
+    overflow: scroll;
 }
