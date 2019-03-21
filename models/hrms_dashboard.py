@@ -229,7 +229,7 @@ class crm(models.Model):
             try:
                 res.append({"lob":rec.display_name,"perc":(total_line / total) * 100})
             except ZeroDivisionError:
-                x = 0,0
+                x = 0
                 res.append({"lob":rec.display_name,"perc":x})
              
         return res
