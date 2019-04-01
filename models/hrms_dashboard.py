@@ -51,7 +51,7 @@ class crm(models.Model):
         claim = self.env['insurance.claim'].search([])
         for rec in claim:
             totalsettled += rec.totalsettled
-            total_paid_amount += rec.total_paid_amount
+            #total_paid_amount += rec.total_paid_amount
         return [totalsettled, total_paid_amount]
 
     @api.model
@@ -75,7 +75,7 @@ class crm(models.Model):
     def get_top_opp_policy_claim(self):
         #excepected_permum,claim_total,policy_total=0.0,0.0,0.0
         opp=self.env['crm.lead'].search_read([], order='date_deadline desc', limit=5 ,fields=["display_name","planned_revenue"])
-        claim=self.env['insurance.claim'].search_read([], order='intimation_date desc', limit=5,fields=["insured", "lob", "insurer", "product", "customer_policy", "policy_number", "name", "totalclaimexp", "totalsettled", "total_paid_amount", "claimstatus"])
+        claim=self.env['insurance.claim'].search_read([], order='intimation_date desc', limit=5,fields=["insured", "lob", "insurer", "product", "customer_policy", "policy_number", "name", "totalclaimexp", "totalsettled", "claimstatus"]) #,total_paid_amount
         pol = self.env['policy.broker'].search_read([], order='gross_perimum desc', limit=5,fields=["insurance_type", "line_of_bussines", "company", "product_policy", "customer", "std_id", "edit_number", "renwal_check", "issue_date", "start_date", "end_date", "gross_perimum", "t_permimum"])
         #for rec in opp:
          #  excepected_permum+=rec.planned_revenue
